@@ -1,0 +1,28 @@
+var prediction1="";
+var prediction2="";
+Webcam.set({
+  width:350,height:300,image_format:'png',png_quality:90
+
+});
+camera=document.getElementById("camera");
+Webcam.attach('#camera');
+function take_snapshot()
+{
+    Webcam.snap(function(data_uri){
+        document.getElementById("result").innerHTML='<img id="captured_image" src="'+data_uri+'"/>';
+    });
+
+}
+console.log('ml5 version',ml5.version);
+classifier=ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/lSjDbiYap/model.json',modelLoaded);
+function modelLoaded(){
+    console.log('modelLoaded');
+
+}
+function speak(){
+    var synth=window.speechSynthesis;
+    var speak_1="The First Prediction is "+prediction1;
+    var speak_2="The Second Predictionn is "+prediction2;
+    var utterThis=new SpeechSynthesisUtterance(speak_1+speak_2);
+    synth.speak(utterThis);
+}
